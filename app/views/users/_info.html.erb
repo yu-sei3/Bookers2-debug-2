@@ -27,8 +27,12 @@
 </table>
 <div class='row'>
   <%= render 'relationships/btn', user: user %>
+  <% if user.id != current_user %>
+    <% if (current_user.following? user) && (user.following? current_user) %>
+      <%= link_to 'chatを始める', chat_path(user.id), class: "btn btn-success btn-sm" %>
+    <% end %>
+  <% end %>
 </div>
-
 <div class='row'>
 <% if user == current_user %>
   <%= link_to edit_user_path(user.id), class: "btn btn-outline-secondary btn-block edit_user_#{user.id}" do %>
@@ -36,3 +40,4 @@
   <% end %>
 <% end %>
 </div>
+
