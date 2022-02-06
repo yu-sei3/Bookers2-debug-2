@@ -1,10 +1,12 @@
 class BooksController < ApplicationController
+  impressionist :action => [:show]
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def show
     @books = Book.new
     @book = Book.find(params[:id])
+    impressionist(@book, nil, unique: [:session_hash.to_s])
     @book_comment = BookComment.new
     @book_favorites = Book.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
   end
@@ -12,6 +14,7 @@ class BooksController < ApplicationController
   def index
     @book = Book.new
     @books = Book.all
+    @rank_books = Book.order(impressions_count: 'DESC')
     @book_comment = BookComment.new
     @book_favorites = Book.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
   end
