@@ -6,12 +6,14 @@ class BooksController < ApplicationController
     @books = Book.new
     @book = Book.find(params[:id])
     @book_comment = BookComment.new
+    @book_favorites = Book.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
   end
 
   def index
     @book = Book.new
     @books = Book.all
     @book_comment = BookComment.new
+    @book_favorites = Book.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
   end
 
   def create
@@ -21,6 +23,7 @@ class BooksController < ApplicationController
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @books = Book.all
+      @book_favorites = Book.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
       render 'index'
     end
   end
