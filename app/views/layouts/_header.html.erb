@@ -7,6 +7,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
+          <div class="d-flex justify-content-center md-2">
+          <%= render 'searches/form' %>
+        </div>
         <% if user_signed_in? %>
           <li>
             <%= link_to user_path(current_user),class: 'nav-link text-light' do %>

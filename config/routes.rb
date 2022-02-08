@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'rooms/new'
+  get 'rooms/index'
+  get 'rooms/show'
+  get 'rooms/edit'
   get 'chats/show'
   get 'relationships/followings'
   get 'relationships/followed'
@@ -22,6 +26,8 @@ Rails.application.routes.draw do
 
   get 'chat/:id', to: 'chats#show', as: 'chat'
   resources :chats, only: [:create]
+
+  resources :rooms, only: [:new, :create, :index, :show, :edit, :update, :destroy]
 
 end
 
