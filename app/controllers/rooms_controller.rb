@@ -53,6 +53,18 @@ class RoomsController < ApplicationController
     redirect_to rooms_path
   end
 
+  def new_mail
+    @room = Room.find(params[:room_id])
+  end
+
+  def send_mail
+    @room = Room.find(params[:room_id])
+    room_users = @room.users
+    @mail_title = params[:mail_title]
+    @mail_content = params[:mail_content]
+    ContactMailer.send_mail(@mail_title, @mail_content, room_users).deliver
+  end
+
   private
 
   def room_params

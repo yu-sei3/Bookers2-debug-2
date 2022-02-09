@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
   resources :rooms, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
     get "join" => "rooms#join"
+    get "new/mail" => "rooms#new_mail"
+    get "send/mail" => "rooms#send_mail"
   end
 
 end
