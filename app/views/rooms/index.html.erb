@@ -14,20 +14,20 @@
           <th></th>
           <th>グループ名</th>
           <th>紹介文</th>
-          <th></th>
+          <th>メンバー数</th>
         </tr>
       </thead>
       <tbody>
         <% @rooms.each do |room| %>
           <tr>
             <td><%= image_tag room.get_image, size: '50x50' %></td>
-            <td><%= link_to room.name, room_path(room) %></td>
+            <td><%= room.name %></td>
             <td><%= room.introduction %></td>
-            <td>
-              <% if room.owner_id == current_user.id %>
-                <%= link_to 'Edit', edit_room_path(room), class: "btn btn-sm btn-success" %>
+            <td><%= room.users.count %></td>
+            <td><%= link_to 'Show', room, class: "room_#{room.id}" %></td>
+              <% if room.is_owned_by?(current_user) %>
+                <td><%= link_to 'Edit', edit_room_path(room), class: "room_#{room.id}" %></td>
               <% end %>
-            </td>
           </tr>
         <% end %>
       </tbody>

@@ -10,12 +10,21 @@
       <h2>Group Detail</h2>
       <table class='table table-hover table-inmerse'>
         <tr>
-          <td><%= image_tag current_user.get_profile_image, size: '50x50' %></td>
+          <td><%= image_tag @room.get_image, size: '50x50' %></td>
           <td><%= @room.name %></td>
           <td><%= @room.introduction %></td>
           <td>
-            <% if @room.owner_id == current_user.id %>
+            <% @room.users.each do |member| %>
+              <%= member.name %>
+            <% end %>
+          </td>
+          <td>
+            <% if @room.is_owned_by?(current_user) %>
               <%= link_to 'Edit', edit_room_path(@room), class: "btn btn-sm btn-success" %>
+            <% elsif @room.users.include?(current_user) %>
+              <%= link_to 'Leave this group', room_path(@room), method: :delete, class: "btn btn-sm btn-danger" %>
+            <% else %>
+              <%= link_to 'Join this group', room_join_path(@room), class: "btn btn-sm btn-success" %>
             <% end %>
           </td>
         </tr>

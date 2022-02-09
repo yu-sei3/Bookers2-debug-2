@@ -108,7 +108,6 @@ ActiveRecord::Schema.define(version: 2022_02_06_112758) do
   create_table "rooms", force: :cascade do |t|
     t.string "name"
     t.string "introduction"
-    t.integer "image_id"
     t.integer "owner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

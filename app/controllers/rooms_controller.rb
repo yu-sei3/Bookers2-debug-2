@@ -6,15 +6,6 @@ class RoomsController < ApplicationController
     @room = Room.new
   end
 
-  def create
-    @room = Room.new(room_params)
-    @room.owner_id = current_user.id
-    if @room.save
-      redirect_to rooms_path, notice: 'グループを作成しました。'
-    else
-      render :new, notice: '入力してください！！'
-    end
-  end
 
   def index
     @book = Book.new
@@ -24,6 +15,23 @@ class RoomsController < ApplicationController
   def show
     @book = Book.new
     @room = Room.find(params[:id])
+  end
+
+  def join
+    @room = Room.find(params[:room_id])
+    @room.users << current_user
+    redirect_to rooms_path
+  end
+
+  def create
+    @room = Room.new(room_params)
+    @room.owner_id = current_user.id
+    @room.user << current_user
+    if @room.save
+      redirect_to rooms_path, notice: 'グループを作成しました。'
+    else
+      render :new, notice: '入力してください！！'
+    end
   end
 
   def edit
@@ -40,10 +48,9 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    delete_room = Room.find(params[:id])
-    if delete_room.destroy
-      redirect_to rooms_path, notice: 'グループを削除しました。'
-    end
+    @room = Room.find(params[:id])
+    @room.users.delete(current_user)
+    redirect_to rooms_path
   end
 
   private
