@@ -26,7 +26,7 @@ class RoomsController < ApplicationController
   def create
     @room = Room.new(room_params)
     @room.owner_id = current_user.id
-    @room.user << current_user
+    @room.users << current_user
     if @room.save
       redirect_to rooms_path, notice: 'グループを作成しました。'
     else

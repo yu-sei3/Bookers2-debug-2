@@ -29,10 +29,7 @@
           <td>
             <% if @room.is_owned_by?(current_user) %>
               <%= link_to 'Edit', edit_room_path(@room), class: "btn btn-sm btn-success" %>
-              <%= link_to room_new_mail_path(@room) do %>
-              <i class="fas fa-paper-plane"></i>
-              Mail
-              <% end %>
+              <%= link_to 'Notice an Event', room_new_mail_path(@room), class: "btn btn-sm btn-info" %>
             <% elsif @room.users.include?(current_user) %>
               <%= link_to 'Leave this group', room_path(@room), method: :delete, class: "btn btn-sm btn-danger" %>
             <% else %>
