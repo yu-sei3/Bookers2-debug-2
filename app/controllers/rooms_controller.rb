@@ -26,7 +26,6 @@ class RoomsController < ApplicationController
   def create
     @room = Room.new(room_params)
     @room.owner_id = current_user.id
-    @room.users << current_user
     if @room.save
       redirect_to rooms_path, notice: 'グループを作成しました。'
     else
@@ -35,11 +34,9 @@ class RoomsController < ApplicationController
   end
 
   def edit
-    @room = Room.find(params[:id])
   end
 
   def update
-    @room = Room.find(params[:id])
     if @room.update(room_params)
       redirect_to rooms_path, notice: 'グループを更新しました。'
     else

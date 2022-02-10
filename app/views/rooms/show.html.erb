@@ -8,13 +8,14 @@
     </div>
     <div class='col-8 offset-md-1'>
       <h2>Group Detail</h2>
-      <table class='table table-hover table-inmerse'>
+      <table class='table table-hover table-inverse'>
         <thead>
           <tr>
-            <th></th>
-            <th>グループ名</th>
-            <th>紹介文</th>
-            <th>メンバー</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Introduction</th>
+            <th>Members</th>
+            <th colspan="3"></th>
           </tr>
         </thead>
         <tr>
@@ -22,18 +23,18 @@
           <td><%= @room.name %></td>
           <td><%= @room.introduction %></td>
           <td>
-            <% @room.users.each do |member| %>
-              <%= member.name %>
+            <% @room.users.each do |user| %>
+              <li style="list-style: none;"><%= user.name %></li>
             <% end %>
           </td>
           <td>
             <% if @room.is_owned_by?(current_user) %>
               <%= link_to 'Edit', edit_room_path(@room), class: "btn btn-sm btn-success" %>
-              <%= link_to 'Notice an Event', room_new_mail_path(@room), class: "btn btn-sm btn-info" %>
+              <%= link_to 'Notice an Event', new_room_event_notice_path(@room), class: "btn btn-sm btn-info" %>
             <% elsif @room.users.include?(current_user) %>
-              <%= link_to 'Leave this group', room_path(@room), method: :delete, class: "btn btn-sm btn-danger" %>
+              <%= link_to 'Leave this group', room_user_rooms_path(@room), method: :delete, class: "btn btn-sm btn-danger" %>
             <% else %>
-              <%= link_to 'Join this group', room_join_path(@room), class: "btn btn-sm btn-success" %>
+              <%= link_to 'Join this group', room_user_rooms_path(@room), method: :post, class: "btn btn-sm btn-success" %>
             <% end %>
           </td>
         </tr>

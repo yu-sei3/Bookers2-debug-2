@@ -28,9 +28,9 @@ Rails.application.routes.draw do
   resources :chats, only: [:create]
 
   resources :rooms, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
-    get "join" => "rooms#join"
-    get "new/mail" => "rooms#new_mail"
-    get "send/mail" => "rooms#send_mail"
+    resource :user_rooms, only: [:create, :destroy]
+    resources :event_notices, only: [:new, :create]
+    get "event_notices" => "event_notices#sent"
   end
 
 end
